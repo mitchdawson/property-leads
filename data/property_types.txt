@@ -1,0 +1,5 @@
+bungalow
+detached
+flat
+semi-detached
+terraced

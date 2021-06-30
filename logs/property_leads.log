@@ -1,0 +1,142 @@
+2021-06-24 22:23:37,332 - root - setup_logger - INFO - Setting the appropriate input and config file paths
+2021-06-24 22:23:37,333 - root - setup_logger - INFO - Initialising input variables
+2021-06-24 22:23:37,431 - database.pgsql - get_properties_with_epc_url_and_no_real_address - INFO - returning 10 property id and display status objects
+2021-06-24 22:23:37,432 - epc.epc - process_properties - INFO - Getting Property 1/10
+2021-06-24 22:23:37,432 - epc.epc - process_properties - INFO - {'id': '3ab713db-7d36-4b94-9698-e361351aff10', 'rm_epc_cert_url': 'https://media.rightmove.co.uk/152k/151070/102398387/151070_987594-1_EPC_00_0000.pdf'}
+2021-06-24 22:23:37,591 - epc.epc - make_web_request_for_url - INFO - Url = https://media.rightmove.co.uk/152k/151070/102398387/151070_987594-1_EPC_00_0000.pdf, Status = 200
+2021-06-24 22:23:37,591 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:23:37,592 - epc.epc - save_epc_page_into_pdf - INFO - writing content to C:\Users\Mitch\Code\RightMove\epc\files\3ab713db-7d36-4b94-9698-e361351aff10.pdf
+2021-06-24 22:23:37,936 - epc.epc - open_pdf_file - INFO - successfully opened pdf C:\Users\Mitch\Code\RightMove\epc\files\3ab713db-7d36-4b94-9698-e361351aff10.pdf
+2021-06-24 22:23:37,941 - epc.epc - extract_page_from_pdf - INFO - sucessfully extracted page from pdf
+2021-06-24 22:23:38,371 - epc.epc - extract_text_from_page - INFO - sucessfully extracted text from the page
+2021-06-24 22:23:38,372 - epc.epc - get_epc_regex_match - INFO - Epc number is 9398-0017-7331-3964-6904
+2021-06-24 22:23:38,372 - epc.epc - get_epc_certificate_number - INFO - finally Epc number is 9398-0017-7331-3964-6904
+2021-06-24 22:23:38,598 - epc.epc - make_web_request_for_url - INFO - Url = https://find-energy-certificate.digital.communities.gov.uk/energy-certificate/9398-0017-7331-3964-6904, Status = 200
+2021-06-24 22:23:38,598 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:23:38,598 - epc.epc - extract_address_from_epc_page - INFO - Epc cert address is 22, Mary Munnion Quarter, CHELMSFORD, CM2 9FT
+2021-06-24 22:23:42,602 - epc.epc - process_properties - INFO - Getting Property 2/10
+2021-06-24 22:23:42,602 - epc.epc - process_properties - INFO - {'id': 'fe6abd49-90f7-4f32-9180-5055e346d45b', 'rm_epc_cert_url': 'https://docs.rezi.cloud/GtZQOmlQJzznKvfNazIRRFpCBWvEUOXYggYNn0CHyHE%3d/18262850.pdf?v=000000000047fda6'}
+2021-06-24 22:23:42,780 - epc.epc - make_web_request_for_url - INFO - Url = https://docs.rezi.cloud/GtZQOmlQJzznKvfNazIRRFpCBWvEUOXYggYNn0CHyHE%3D/18262850.pdf?v=000000000047fda6, Status = 200
+2021-06-24 22:23:42,780 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:23:42,781 - epc.epc - save_epc_page_into_pdf - INFO - writing content to C:\Users\Mitch\Code\RightMove\epc\files\fe6abd49-90f7-4f32-9180-5055e346d45b.pdf
+2021-06-24 22:23:42,889 - epc.epc - open_pdf_file - INFO - successfully opened pdf C:\Users\Mitch\Code\RightMove\epc\files\fe6abd49-90f7-4f32-9180-5055e346d45b.pdf
+2021-06-24 22:23:42,894 - epc.epc - extract_page_from_pdf - INFO - sucessfully extracted page from pdf
+2021-06-24 22:23:42,969 - epc.epc - extract_text_from_page - INFO - sucessfully extracted text from the page
+2021-06-24 22:23:42,970 - epc.epc - get_epc_regex_match - INFO - Epc number is 0360-2880-7010-2270-0085
+2021-06-24 22:23:42,970 - epc.epc - get_epc_certificate_number - INFO - finally Epc number is 0360-2880-7010-2270-0085
+2021-06-24 22:23:43,133 - epc.epc - make_web_request_for_url - INFO - Url = https://find-energy-certificate.digital.communities.gov.uk/energy-certificate/0360-2880-7010-2270-0085, Status = 200
+2021-06-24 22:23:43,133 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:23:43,133 - epc.epc - extract_address_from_epc_page - INFO - Epc cert address is 2 NORTHEY VIEW, HEYBRIDGE, CM9 4PH
+2021-06-24 22:23:44,141 - epc.epc - process_properties - INFO - Getting Property 3/10
+2021-06-24 22:23:44,141 - epc.epc - process_properties - INFO - {'id': 'a51b8dee-da97-4dcd-b216-3409d18b888e', 'rm_epc_cert_url': 'https://media.rightmove.co.uk/15k/14258/78455510/14258_RobinHoodRd_EPC_00_0000.pdf'}
+2021-06-24 22:23:44,306 - epc.epc - make_web_request_for_url - INFO - Url = https://media.rightmove.co.uk/15k/14258/78455510/14258_RobinHoodRd_EPC_00_0000.pdf, Status = 200
+2021-06-24 22:23:44,306 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:23:44,306 - epc.epc - save_epc_page_into_pdf - INFO - writing content to C:\Users\Mitch\Code\RightMove\epc\files\a51b8dee-da97-4dcd-b216-3409d18b888e.pdf
+2021-06-24 22:23:44,331 - epc.epc - open_pdf_file - INFO - successfully opened pdf C:\Users\Mitch\Code\RightMove\epc\files\a51b8dee-da97-4dcd-b216-3409d18b888e.pdf
+2021-06-24 22:23:44,335 - epc.epc - extract_page_from_pdf - INFO - sucessfully extracted page from pdf
+2021-06-24 22:23:44,855 - epc.epc - extract_text_from_page - INFO - sucessfully extracted text from the page
+2021-06-24 22:23:44,855 - epc.epc - get_epc_regex_match - INFO - Epc number is 8514-7420-1689-0036-4992
+2021-06-24 22:23:44,855 - epc.epc - get_epc_certificate_number - INFO - finally Epc number is 8514-7420-1689-0036-4992
+2021-06-24 22:23:45,024 - epc.epc - make_web_request_for_url - INFO - Url = https://find-energy-certificate.digital.communities.gov.uk/energy-certificate/8514-7420-1689-0036-4992, Status = 200
+2021-06-24 22:23:45,026 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:23:45,026 - epc.epc - extract_address_from_epc_page - INFO - Epc cert address is 8, Robin Hood Road, BRENTWOOD, CM15 9EN
+2021-06-24 22:23:46,029 - epc.epc - process_properties - INFO - Getting Property 4/10
+2021-06-24 22:23:46,029 - epc.epc - process_properties - INFO - {'id': 'de326f41-f32c-4b0a-93dc-20427ab12d06', 'rm_epc_cert_url': 'https://media.rightmove.co.uk/152k/151070/103589900/151070_817767-1_EPC_00_0000.pdf'}
+2021-06-24 22:23:46,192 - epc.epc - make_web_request_for_url - INFO - Url = https://media.rightmove.co.uk/152k/151070/103589900/151070_817767-1_EPC_00_0000.pdf, Status = 200
+2021-06-24 22:23:46,192 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:23:46,192 - epc.epc - save_epc_page_into_pdf - INFO - writing content to C:\Users\Mitch\Code\RightMove\epc\files\de326f41-f32c-4b0a-93dc-20427ab12d06.pdf
+2021-06-24 22:23:46,213 - epc.epc - open_pdf_file - INFO - successfully opened pdf C:\Users\Mitch\Code\RightMove\epc\files\de326f41-f32c-4b0a-93dc-20427ab12d06.pdf
+2021-06-24 22:23:46,218 - epc.epc - extract_page_from_pdf - INFO - sucessfully extracted page from pdf
+2021-06-24 22:23:46,658 - epc.epc - extract_text_from_page - INFO - sucessfully extracted text from the page
+2021-06-24 22:23:46,658 - epc.epc - get_epc_regex_match - INFO - Epc number is 8291-7521-6510-9681-6902
+2021-06-24 22:23:46,658 - epc.epc - get_epc_certificate_number - INFO - finally Epc number is 8291-7521-6510-9681-6902
+2021-06-24 22:23:46,833 - epc.epc - make_web_request_for_url - INFO - Url = https://find-energy-certificate.digital.communities.gov.uk/energy-certificate/8291-7521-6510-9681-6902, Status = 200
+2021-06-24 22:23:46,833 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:23:46,833 - epc.epc - extract_address_from_epc_page - INFO - Epc cert address is 12, Ilmington Drive, BASILDON, SS13 1RD
+2021-06-24 22:23:50,843 - epc.epc - process_properties - INFO - Getting Property 5/10
+2021-06-24 22:23:50,843 - epc.epc - process_properties - INFO - {'id': '6fc5aba9-2392-4a30-9ca6-87abb0f99023', 'rm_epc_cert_url': 'https://media.rightmove.co.uk/15k/14258/89216798/14258_Flat9BaddowRoad_EPC_00_0000.pdf'}
+2021-06-24 22:23:51,071 - epc.epc - make_web_request_for_url - INFO - Url = https://media.rightmove.co.uk/15k/14258/89216798/14258_Flat9BaddowRoad_EPC_00_0000.pdf, Status = 200
+2021-06-24 22:23:51,071 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:23:51,071 - epc.epc - save_epc_page_into_pdf - INFO - writing content to C:\Users\Mitch\Code\RightMove\epc\files\6fc5aba9-2392-4a30-9ca6-87abb0f99023.pdf
+2021-06-24 22:23:51,110 - epc.epc - open_pdf_file - INFO - successfully opened pdf C:\Users\Mitch\Code\RightMove\epc\files\6fc5aba9-2392-4a30-9ca6-87abb0f99023.pdf
+2021-06-24 22:23:51,114 - epc.epc - extract_page_from_pdf - INFO - sucessfully extracted page from pdf
+2021-06-24 22:23:51,502 - epc.epc - extract_text_from_page - INFO - sucessfully extracted text from the page
+2021-06-24 22:23:51,502 - epc.epc - get_epc_regex_match - INFO - Epc number is 9258-2853-7996-9223-3341
+2021-06-24 22:23:51,502 - epc.epc - get_epc_certificate_number - INFO - finally Epc number is 9258-2853-7996-9223-3341
+2021-06-24 22:23:51,677 - epc.epc - make_web_request_for_url - INFO - Url = https://find-energy-certificate.digital.communities.gov.uk/energy-certificate/9258-2853-7996-9223-3341, Status = 200
+2021-06-24 22:23:51,677 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:23:51,677 - epc.epc - extract_address_from_epc_page - INFO - Epc cert address is Flat 9, 39, Baddow Road, CHELMSFORD, CM2 0DA
+2021-06-24 22:23:55,682 - epc.epc - process_properties - INFO - Getting Property 6/10
+2021-06-24 22:23:55,682 - epc.epc - process_properties - INFO - {'id': '7e39fbe3-be88-4b2d-8023-9335348378c3', 'rm_epc_cert_url': 'https://media.rightmove.co.uk/152k/151070/105264122/151070_991610-1_EPC_00_0000.pdf'}
+2021-06-24 22:23:55,841 - epc.epc - make_web_request_for_url - INFO - Url = https://media.rightmove.co.uk/152k/151070/105264122/151070_991610-1_EPC_00_0000.pdf, Status = 200
+2021-06-24 22:23:55,841 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:23:55,841 - epc.epc - save_epc_page_into_pdf - INFO - writing content to C:\Users\Mitch\Code\RightMove\epc\files\7e39fbe3-be88-4b2d-8023-9335348378c3.pdf
+2021-06-24 22:23:55,902 - epc.epc - open_pdf_file - INFO - successfully opened pdf C:\Users\Mitch\Code\RightMove\epc\files\7e39fbe3-be88-4b2d-8023-9335348378c3.pdf
+2021-06-24 22:23:55,906 - epc.epc - extract_page_from_pdf - INFO - sucessfully extracted page from pdf
+2021-06-24 22:23:56,254 - epc.epc - extract_text_from_page - INFO - sucessfully extracted text from the page
+2021-06-24 22:23:56,254 - epc.epc - get_epc_regex_match - INFO - Epc number is 9843-3886-7594-9496-4835
+2021-06-24 22:23:56,254 - epc.epc - get_epc_certificate_number - INFO - finally Epc number is 9843-3886-7594-9496-4835
+2021-06-24 22:23:56,449 - epc.epc - make_web_request_for_url - INFO - Url = https://find-energy-certificate.digital.communities.gov.uk/energy-certificate/9843-3886-7594-9496-4835, Status = 200
+2021-06-24 22:23:56,449 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:23:56,449 - epc.epc - extract_address_from_epc_page - INFO - Epc cert address is 53, Wharf Road, CHELMSFORD, CM2 6FS
+2021-06-24 22:24:01,453 - epc.epc - process_properties - INFO - Getting Property 7/10
+2021-06-24 22:24:01,453 - epc.epc - process_properties - INFO - {'id': '6e641704-a222-4173-b91a-450f21ce6a56', 'rm_epc_cert_url': 'https://media.rightmove.co.uk/152k/151070/102437906/151070_723108-1_EPC_00_0000.pdf'}
+2021-06-24 22:24:01,641 - epc.epc - make_web_request_for_url - INFO - Url = https://media.rightmove.co.uk/152k/151070/102437906/151070_723108-1_EPC_00_0000.pdf, Status = 200
+2021-06-24 22:24:01,642 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:24:01,642 - epc.epc - save_epc_page_into_pdf - INFO - writing content to C:\Users\Mitch\Code\RightMove\epc\files\6e641704-a222-4173-b91a-450f21ce6a56.pdf
+2021-06-24 22:24:01,664 - epc.epc - open_pdf_file - INFO - successfully opened pdf C:\Users\Mitch\Code\RightMove\epc\files\6e641704-a222-4173-b91a-450f21ce6a56.pdf
+2021-06-24 22:24:01,668 - epc.epc - extract_page_from_pdf - INFO - sucessfully extracted page from pdf
+2021-06-24 22:24:02,086 - epc.epc - extract_text_from_page - INFO - sucessfully extracted text from the page
+2021-06-24 22:24:02,086 - epc.epc - get_epc_regex_match - INFO - Epc number is 8391-7322-6070-2274-0902
+2021-06-24 22:24:02,086 - epc.epc - get_epc_certificate_number - INFO - finally Epc number is 8391-7322-6070-2274-0902
+2021-06-24 22:24:02,383 - epc.epc - make_web_request_for_url - INFO - Url = https://find-energy-certificate.digital.communities.gov.uk/energy-certificate/8391-7322-6070-2274-0902, Status = 200
+2021-06-24 22:24:02,383 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:24:02,383 - epc.epc - extract_address_from_epc_page - INFO - Epc cert address is 123a, Grove Road, RAYLEIGH, SS6 8RD
+2021-06-24 22:24:07,389 - epc.epc - process_properties - INFO - Getting Property 8/10
+2021-06-24 22:24:07,389 - epc.epc - process_properties - INFO - {'id': 'a64e20ce-154c-477e-b11c-e30fca8f2672', 'rm_epc_cert_url': 'https://media.rightmove.co.uk/203k/202979/80411028/202979_764644-1_EPC_00_0000.pdf'}
+2021-06-24 22:24:07,557 - epc.epc - make_web_request_for_url - INFO - Url = https://media.rightmove.co.uk/203k/202979/80411028/202979_764644-1_EPC_00_0000.pdf, Status = 200
+2021-06-24 22:24:07,557 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:24:07,557 - epc.epc - save_epc_page_into_pdf - INFO - writing content to C:\Users\Mitch\Code\RightMove\epc\files\a64e20ce-154c-477e-b11c-e30fca8f2672.pdf
+2021-06-24 22:24:07,580 - epc.epc - open_pdf_file - INFO - successfully opened pdf C:\Users\Mitch\Code\RightMove\epc\files\a64e20ce-154c-477e-b11c-e30fca8f2672.pdf
+2021-06-24 22:24:07,584 - epc.epc - extract_page_from_pdf - INFO - sucessfully extracted page from pdf
+2021-06-24 22:24:07,981 - epc.epc - extract_text_from_page - INFO - sucessfully extracted text from the page
+2021-06-24 22:24:07,982 - epc.epc - get_epc_regex_match - INFO - Epc number is 2498-7093-7226-1021-9904
+2021-06-24 22:24:07,982 - epc.epc - get_epc_certificate_number - INFO - finally Epc number is 2498-7093-7226-1021-9904
+2021-06-24 22:24:08,149 - epc.epc - make_web_request_for_url - INFO - Url = https://find-energy-certificate.digital.communities.gov.uk/energy-certificate/2498-7093-7226-1021-9904, Status = 200
+2021-06-24 22:24:08,149 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:24:08,149 - epc.epc - extract_address_from_epc_page - INFO - Epc cert address is 4, Middle King, BRAINTREE, CM7 3XY
+2021-06-24 22:24:12,150 - epc.epc - process_properties - INFO - Getting Property 9/10
+2021-06-24 22:24:12,150 - epc.epc - process_properties - INFO - {'id': '56a2d426-efaf-4073-a3d3-bd424a5f4109', 'rm_epc_cert_url': 'https://media.rightmove.co.uk/203k/202979/107449331/202979_545194-1_EPC_00_0000.pdf'}
+2021-06-24 22:24:12,264 - epc.epc - make_web_request_for_url - INFO - Url = https://media.rightmove.co.uk/203k/202979/107449331/202979_545194-1_EPC_00_0000.pdf, Status = 200
+2021-06-24 22:24:12,264 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:24:12,264 - epc.epc - save_epc_page_into_pdf - INFO - writing content to C:\Users\Mitch\Code\RightMove\epc\files\56a2d426-efaf-4073-a3d3-bd424a5f4109.pdf
+2021-06-24 22:24:12,324 - epc.epc - open_pdf_file - INFO - successfully opened pdf C:\Users\Mitch\Code\RightMove\epc\files\56a2d426-efaf-4073-a3d3-bd424a5f4109.pdf
+2021-06-24 22:24:12,329 - epc.epc - extract_page_from_pdf - INFO - sucessfully extracted page from pdf
+2021-06-24 22:24:12,398 - epc.epc - extract_text_from_page - INFO - sucessfully extracted text from the page
+2021-06-24 22:24:12,398 - epc.epc - get_epc_regex_match - INFO - Epc number is 0068-3033-7247-6431-2990
+2021-06-24 22:24:12,399 - epc.epc - get_epc_certificate_number - INFO - finally Epc number is 0068-3033-7247-6431-2990
+2021-06-24 22:24:12,604 - epc.epc - make_web_request_for_url - INFO - Url = https://find-energy-certificate.digital.communities.gov.uk/energy-certificate/0068-3033-7247-6431-2990, Status = 200
+2021-06-24 22:24:12,604 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:24:12,604 - epc.epc - extract_address_from_epc_page - INFO - Epc cert address is 129, Tyelands, BILLERICAY, CM12 9PB
+2021-06-24 22:24:15,611 - epc.epc - process_properties - INFO - Getting Property 10/10
+2021-06-24 22:24:15,611 - epc.epc - process_properties - INFO - {'id': '2c68b5ce-0dbb-4364-834f-f4627b4c1f38', 'rm_epc_cert_url': 'https://media.rightmove.co.uk/15k/14507/98813090/14507_20021_EPC_00_0000.pdf'}
+2021-06-24 22:24:17,126 - epc.epc - make_web_request_for_url - INFO - Url = https://media.rightmove.co.uk/15k/14507/98813090/14507_20021_EPC_00_0000.pdf, Status = 200
+2021-06-24 22:24:17,126 - epc.epc - get_page_for_url - INFO - returning page
+2021-06-24 22:24:17,126 - epc.epc - save_epc_page_into_pdf - INFO - writing content to C:\Users\Mitch\Code\RightMove\epc\files\2c68b5ce-0dbb-4364-834f-f4627b4c1f38.pdf
+2021-06-24 22:24:17,154 - epc.epc - open_pdf_file - INFO - successfully opened pdf C:\Users\Mitch\Code\RightMove\epc\files\2c68b5ce-0dbb-4364-834f-f4627b4c1f38.pdf
+2021-06-24 22:24:17,157 - epc.epc - extract_page_from_pdf - INFO - sucessfully extracted page from pdf
+2021-06-24 22:24:17,167 - epc.epc - get_epc_certificate_number - INFO - finally Epc number is None
+2021-06-24 22:24:17,171 - database.pgsql - update_epc_cert_address_attempted - INFO - properties epc cert address attempted = 1
+2021-06-24 22:24:19,173 - epc.epc - cleanup_files_directory - INFO - C:\Users\Mitch\Code\RightMove\epc\files
+2021-06-24 22:24:19,173 - epc.epc - cleanup_files_directory - INFO - C:\Users\Mitch\Code\RightMove\epc\files\2c68b5ce-0dbb-4364-834f-f4627b4c1f38.pdf
+2021-06-24 22:24:19,174 - epc.epc - cleanup_files_directory - INFO - C:\Users\Mitch\Code\RightMove\epc\files\3ab713db-7d36-4b94-9698-e361351aff10.pdf
+2021-06-24 22:24:19,174 - epc.epc - cleanup_files_directory - INFO - C:\Users\Mitch\Code\RightMove\epc\files\56a2d426-efaf-4073-a3d3-bd424a5f4109.pdf
+2021-06-24 22:24:19,174 - epc.epc - cleanup_files_directory - INFO - C:\Users\Mitch\Code\RightMove\epc\files\6e641704-a222-4173-b91a-450f21ce6a56.pdf
+2021-06-24 22:24:19,175 - epc.epc - cleanup_files_directory - INFO - C:\Users\Mitch\Code\RightMove\epc\files\6fc5aba9-2392-4a30-9ca6-87abb0f99023.pdf
+2021-06-24 22:24:19,175 - epc.epc - cleanup_files_directory - INFO - C:\Users\Mitch\Code\RightMove\epc\files\7e39fbe3-be88-4b2d-8023-9335348378c3.pdf
+2021-06-24 22:24:19,175 - epc.epc - cleanup_files_directory - INFO - C:\Users\Mitch\Code\RightMove\epc\files\a51b8dee-da97-4dcd-b216-3409d18b888e.pdf
+2021-06-24 22:24:19,176 - epc.epc - cleanup_files_directory - INFO - C:\Users\Mitch\Code\RightMove\epc\files\a64e20ce-154c-477e-b11c-e30fca8f2672.pdf
+2021-06-24 22:24:19,176 - epc.epc - cleanup_files_directory - INFO - C:\Users\Mitch\Code\RightMove\epc\files\de326f41-f32c-4b0a-93dc-20427ab12d06.pdf
+2021-06-24 22:24:19,176 - epc.epc - cleanup_files_directory - INFO - C:\Users\Mitch\Code\RightMove\epc\files\fe6abd49-90f7-4f32-9180-5055e346d45b.pdf
+2021-06-24 22:24:19,179 - database.pgsql - update_epc_cert_address - INFO - properties epc cert address updated = 9
+2021-06-24 22:24:19,179 - epc.epc - run - INFO - Sleeping
