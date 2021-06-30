@@ -127,6 +127,9 @@ class Database:
                 return [dict(r) for r in results]
     
     def get_id_rm_property_id_display_status(self):
+        """
+        Get properties, property rm id and display status from the database.
+        """
         with self.pool.getconn() as conn:
             try:
                 cur = conn.cursor()
@@ -152,33 +155,11 @@ class Database:
                 # Put the connection back into the pool.
                 self.pool.putconn(conn)
                 return [dict(r) for r in results]
-
-    # def get_properties_sold_stc_no_postcode_and_no_sold_nearby_url(self):
-    #     with self.pool.getconn() as conn:
-    #         try:
-    #             cur.execute(
-    #             """
-    #             SELECT
-    #             id, rm_property_url, rm_sold_stc, 
-    #             rm_postcode, rm_sold_nearby_url
-    #             FROM properties
-    #             WHERE rm_sold_stc = true AND
-    #             rm_postcode IS NULL OR
-    #             rm_sold_stc = true AND
-    #             rm_sold_nearby_url IS NULL;
-    #             """
-    #             )
-    #             results = conn.cur.fetchall()
-    #         except Exception as e:
-    #             logger.exception(str(e))
-    #             return
-    #         else:
-    #             logger.info(f"returning {len(results)} properties sold stc no postcode and no sold nearby url")
-    #             return [dict(r) for r in results]
     
     def get_properties_with_no_postcode(self):
         """
-        Get properties with no postcode value, limit to 100 results.
+        Extract properties, postcodes, sold nearby url where the postcode is NULL,
+        limit to 200 properties.
         """
         with self.pool.getconn() as conn:
             try:
@@ -210,6 +191,9 @@ class Database:
                 return [dict(r) for r in results]
     
     def get_properties_with_no_sale_history(self):
+        """
+        Get properties with no sale history.
+        """
         with self.pool.getconn() as conn:
             try:
                 cur = conn.cursor()
