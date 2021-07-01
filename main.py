@@ -54,7 +54,7 @@ def setup_logger():
 def main():
 
     running = threading.Event()
-    program_sleep_time = 300 # Seconds
+    program_sleep_time = 30 # Seconds
 
     # Create our logger instance
     logger = setup_logger()
@@ -124,20 +124,20 @@ def main():
 
     # Run our Methods
     
-    # RightMovePropertySearch
-    rmps.start()
+    # # RightMovePropertySearch
+    # rmps.start()
 
-    # RightMoveIndividualProperty Search
-    rmip.start()
+    # # RightMoveIndividualProperty Search
+    # rmip.start()
 
-    # RightMovePropertySaleHistory
-    rmpsh.start()
+    # # RightMovePropertySaleHistory
+    # rmpsh.start()
 
     # RightMoveAreaSaleHistory
     rmash.start()
 
     # Epc
-    epc.start()
+    # epc.start()
 
 
     try:
@@ -151,11 +151,11 @@ def main():
         # Turn off the running flag.
         running.set()
         # Join the Threads (wait for them to complete)
-        rmps.join()
-        rmip.join()
-        rmpsh.join()
+        # rmps.join()
+        # rmip.join()
+        # rmpsh.join()
         rmash.join()
-        epc.join()        
+        # epc.join()        
     
     # Catch the Psycopg2 Operational Error and recreate the datebase connection.
     except OperationalError as e:

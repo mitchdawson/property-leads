@@ -3,6 +3,7 @@ logger = logging.getLogger(__name__)
 import json
 import time
 from threading import Thread
+import random
 
 
 class RightMoveAreaSaleHistory(Thread):
@@ -95,39 +96,86 @@ class RightMoveAreaSaleHistory(Thread):
         # Create an area sale history placeholder.
         area_sale_history = list()
 
-        # Get the first page for a given postcode.
-        first_page = self.get_area_sale_history_page(postcode_url)
-        if not first_page:
-            return area_sale_history
-        
-        # Extract the Json from the page.
-        json = self.get_area_sale_history_json(first_page)
-        # Get the Number of results found.
-        result_count = self.get_area_sale_history_result_count(json)
-        logger.info("extracted result count successfully")
-        # Get the sales history from the first page.
-        sales_history = self.get_area_sale_history_properties(json)
-        # Add the sales history to the area_sale_history list.
-        area_sale_history.extend(sales_history)
+        # Page number
+        page_number = 1
 
-        # Check if the length of the area_sale_history list is equal to the result count.
-        while len(area_sale_history) < result_count:
-            page_number = 2
-            next_page = self.get_area_sale_history_page(postcode_url, page_number=page_number)
-            if not next_page:
-                continue
+        # Result Count
+        result_count = None
+
+
+        # WHile Loop
+        while True:
             
-            # Extract the Json from the page.
-            json = self.get_area_sale_history_json(next_page)
+            # Get the Page of results
+            page = self.get_area_sale_history_page(postcode_url, page_number=page_number)
+
+            # Check we have a valid object.
+            if not page:
+                # break out of the while loop.
+                break
+            
+            # Extract the json from the page.
+            json = self.get_area_sale_history_json(page)
+
+            # If the result count is None then we want to break out the results from the page.
+            if not result_count:
+                # Update the result_count variable.
+                result_count = self.get_area_sale_history_result_count(json)
+            
             # Get the sales history from the first page.
             sales_history = self.get_area_sale_history_properties(json)
+            
             # Add the sales history to the area_sale_history list.
             area_sale_history.extend(sales_history)
-            # Increment the page counter
-            page_number += 1
 
+            # Check if the number of results in the area_sale_history list is equal or greater
+            # than the result_count variable to indicate we have retrived all results.
+            if len(area_sale_history) >= result_count:
+                # Break out of the while loop.
+                break
+
+            # To get more results we increase the page number variable.
+            page_number += 1
+            
+            # Sleep for a random period.
+            time.sleep(random.randint(1, 5))
+        
         # Return the area_sale_history list
         return area_sale_history
+
+        # # Get the first page for a given postcode.
+        # first_page = self.get_area_sale_history_page(postcode_url)
+        # if not first_page:
+        #     return area_sale_history
+        
+        # # Extract the Json from the page.
+        # json = self.get_area_sale_history_json(first_page)
+        # # Get the Number of results found.
+        # result_count = self.get_area_sale_history_result_count(json)
+        # logger.info("extracted result count successfully")
+        # Get the sales history from the first page.
+        # sales_history = self.get_area_sale_history_properties(json)
+        # Add the sales history to the area_sale_history list.
+        # area_sale_history.extend(sales_history)
+
+        # # Check if the length of the area_sale_history list is equal to the result count.
+        # while len(area_sale_history) < result_count:
+        #     page_number = 2
+        #     next_page = self.get_area_sale_history_page(postcode_url, page_number=page_number)
+        #     if not next_page:
+        #         continue
+            
+        #     # Extract the Json from the page.
+        #     json = self.get_area_sale_history_json(next_page)
+        #     # Get the sales history from the first page.
+        #     sales_history = self.get_area_sale_history_properties(json)
+        #     # Add the sales history to the area_sale_history list.
+        #     area_sale_history.extend(sales_history)
+        #     # Increment the page counter
+        #     page_number += 1
+
+        # # Return the area_sale_history list
+        # return area_sale_history
     
     def get_address_for_property(self, property_sale_history, area_sales_history):
         # Set a place holder for address.
