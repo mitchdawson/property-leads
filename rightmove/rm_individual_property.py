@@ -40,12 +40,16 @@ class RightMoveIndividualProperty(Thread):
         else:
             return js
 
-    # def get_and_set_sold_stc_status(self, json, property):
-    #     # Extract the sold stc status.
-    #     try:
-    #         property["rm_sold_stc"] = json["analyticsInfo"]["analyticsProperty"]["soldSTC"]
-    #     except KeyError:
-    #         return
+    def get_sold_stc_status(self, json):
+        # Set a default value of None for the soldSTC status.
+        sold_stc = None
+        # Extract the sold stc status.
+        try:
+            sold_stc = json["analyticsInfo"]["analyticsProperty"]["soldSTC"]
+        except KeyError:
+            return
+        else:
+            return sold_stc
 
     def get_and_set_property_sold_nearby_url(self, json, property):
         # Extract the url for properties sold nearby.
@@ -89,8 +93,6 @@ class RightMoveIndividualProperty(Thread):
                 for epc in json["propertyData"]["epcGraphs"]:
                     if ".pdf" in epc["url"]:
                         property["rm_epc_cert_url"] = epc["url"]
-                        # Set the "rm_epc_cert" value to 1
-                        # property["rm_epc_cert"] = 1
                         # Break out of the loop if we have found a value as we only want one.
                         break
                     else:
@@ -100,6 +102,30 @@ class RightMoveIndividualProperty(Thread):
                 return
         except Exception as e:
             logger.exception(str(e))
+        
+    def get_and_validate_page_for_url(self, property):
+        # Get the property page.
+        page = self.web_client.get_page_for_url(property["rm_property_url"])
+
+        # Delete properties with a status of 410 or 404 which indicates that they have been removed
+        # or no longer listed.
+        if page.status_code == 404 or page.status_code == 410:
+            # Clear out any sales history for a given property
+            # Delete the property from the database.
+            self.db.delete_sale_history_and_property((property["id"],))
+            # return
+            return
+
+        # Check for a value of None or a non 200 status code.
+        elif not page or page.status_code != 200:
+            # Log the url and the status
+            logger.info(f"No page or non successful status code url = {page.url}, status = {page.status_code}")
+            # return
+            return
+        else:
+            # Return a valid page.
+            return page
+
     
     def process_properties_no_postcode_and_no_sold_nearby_url(self, properties):
         # Create a new property list placeholder.
@@ -111,23 +137,12 @@ class RightMoveIndividualProperty(Thread):
                 # Get the property from the list.
                 property = properties[index]
                 logger.info(property)
+
                 # Get the property page.
-                page = self.web_client.get_page_for_url(property["rm_property_url"])
-
-                # Delete properties with a status of 410 or 404 which indicates that they have been removed
-                # or no longer listed.
-                if page.status_code == 404 or page.status_code == 410:
-                    # Clear out any sales history for a given property
-                    # Delete the property from the database.
-                    self.db.delete_property_for_property_id((property["id"],))
-                    # Continue
-                    continue
-
-                # Check for a value of None or a non 200 status code.
-                elif not page or page.status_code != 200:
-                    # Log the url and the status
-                    logger.info(f"No page or non successful status code url = {page.url}, status = {page.status_code}")
-                    # Continue for the next url
+                page = self.get_and_validate_page_for_url(property)
+                # Check for am invalid page
+                if not page:
+                    # Continue to the next object
                     continue
 
                 # Parse the individual property Page
@@ -135,6 +150,7 @@ class RightMoveIndividualProperty(Thread):
                 # Check we have a valid json object or try the next property in the list.
                 if not json:
                     continue
+
                 # Process property sold nearby value extraction.
                 self.get_and_set_property_sold_nearby_url(json, property)
                 # Process Postcode Value Extraction
@@ -149,10 +165,60 @@ class RightMoveIndividualProperty(Thread):
                 continue
             
             finally:
-                time.sleep(random.randint(1, 5))
+                time.sleep(random.randint(0, 2))
         
         # Return the updated properties list.
         return updated_properties
+    
+    def process_properties_sold_stc_updates(self, properties):
+        # Create a property sold stc change list placeholder.
+        updated_sold_stc_properties = list()
+        # Create an last accessed list
+        last_accessed_properties = list()
+        # Iterate through the properties list
+        for index in range(len(properties)):
+            try:
+                logger.info(f"Getting Property {index + 1}/{len(properties)}")
+                # Get the property from the list.
+                property = properties[index]
+                logger.info(property)
+                
+                # Get the property page.
+                page = self.get_and_validate_page_for_url(property)
+                # Check for am invalid page
+                if not page:
+                    # Continue to the next object
+                    continue
+
+                # Parse the individual property Page
+                json = self.parse_property_page(page.text)
+                # Check we have a valid json object or try the next property in the list.
+                if not json:
+                    continue
+                
+                # Get the soldSTC value
+                sold_stc = self.get_sold_stc_status(json)
+
+                # Add the property id to the last_accessed_properties list
+                last_accessed_properties.append((property["id"],))
+
+                # Compare for a None value and against the existing value.
+                if sold_stc and sold_stc != property["rm_sold_stc"]:
+                    logger.info(f'current Sold stc value = {sold_stc}, existing = {property["rm_sold_stc"]}')
+                    # Update the property value
+                    property["rm_sold_stc"] = sold_stc
+                    # Update the updated_sold_stc_properties list.
+                    updated_sold_stc_properties.append((property["id"], property["rm_sold_stc"]))
+            
+            except Exception as e:
+                logger.exception(str(e))
+                continue
+            
+            finally:
+                time.sleep(random.randint(0, 2))
+        
+        # Return the updated properties list.
+        return updated_sold_stc_properties, last_accessed_properties
         
     def get_postcode_sold_nearby_values_list(self, properties):
         # Create a list of tuples containing the property OrderedDictionary values.
@@ -164,7 +230,7 @@ class RightMoveIndividualProperty(Thread):
             property_values_list.append(vals)
         return property_values_list
     
-    def process_properties(self, properties):
+    def process_properties_with_no_postcode_and_no_sold_nearby_url(self, properties):
         # Check that we have a valid list of properties, if not return.
         if not properties:
            return
@@ -182,6 +248,24 @@ class RightMoveIndividualProperty(Thread):
         # Update the properties in the database.
         self.db.update_property_postcode_sold_nearby_url_values(property_values)
 
+    
+    def process_properties_not_accessed_within_the_alotted_period(self, properties):
+        # Check that we have a valid list of properties, if not return.
+        if not properties:
+           return
+        
+        # Process sold STC Updates
+        properties_stc_update, last_accessed_properties = self.process_properties_sold_stc_updates(properties)
+        
+        if properties_stc_update:
+            # Update the Database with updated sold stc values
+            self.db.update_property_sold_stc_status(properties_stc_update)
+
+        if last_accessed_properties: 
+            # Process properties that we have successfully accessed and update the last_accessed_timestamp
+            self.db.update_property_last_accessed(last_accessed_properties)
+
+
     def run(self):
 
         # Forever Loop
@@ -191,8 +275,14 @@ class RightMoveIndividualProperty(Thread):
                 properties = self.db.get_properties_with_no_postcode()
 
                 # Process Properties
-                self.process_properties(properties)
-            
+                self.process_properties_with_no_postcode_and_no_sold_nearby_url(properties)
+
+                # Get Properties that have not been accessed with the alotted period.
+                properties = self.db.get_properties_not_accessed_within_alloted_time()
+
+                # Process properties not accessed within the alotted period.
+                self.process_properties_not_accessed_within_the_alotted_period(properties)
+
             except Exception as e:
                 logger.exception(str(e))
             

@@ -7,19 +7,36 @@
 -- "propertyTypes",
 -- "primaryDisplayPropertyType",
 -- "includeSSTC",
--- "dontShow",
--- accessed
+-- "dontShow"
 -- FROM urls
 -- WHERE accessed::timestamp < (now() - INTERVAL '48 hours')
--- ORDER BY accessed asc;
+-- ORDER BY accessed ASC;
+-- LIMIT 50;
+
+select
+rm_display_address,
+rm_listing_price,
+rm_property_url,
+rm_postcode,
+created,
+rm_real_address,
+rm_epc_cert_address
+from properties 
+where 
+created::timestamp > (now() - INTERVAL '24 hours')
+AND rm_real_address IS NOT NULL
+-- or rm_epc_cert_address IS NOT NULL
+order by created desc;
+
+-- select * from urls order by accessed asc;
 -- update urls set accessed = '2021-06-17 20:51:52' where description like 'Chelmsford%';
 -- select * from urls where description like 'Chelmsford%' order by accessed asc;
 -- update urls set description = 'Chelmsford, Essex' where description like 'Chelmsford%';
 -- update properties 
 -- set rm_postcode = NULL, rm_sold_nearby_url = NULL 
 -- where rm_real_address IS NULL;
--- id = 'c896d97c-97ce-4617-a577-71fc3d991a08';
-select * from properties WHERE rm_epc_cert_url IS NOT NULL;
+-- id = 'c896d97c-97ce-4617-a577-71fc3d991a08';SS15 5JW
+-- select * from properties WHERE rm_epc_cert_url IS NOT NULL;
 
 -- delete from sale_history where property_id in (select id from properties where rm_postcode IS NULL)
 -- SELECT
@@ -96,22 +113,26 @@ select * from properties WHERE rm_epc_cert_url IS NOT NULL;
 -- update properties set rm_sale_history_attempted = false where rm_sale_history_attempted = true;
 -- select id, accessed from urls
 -- WHERE accessed::timestamp < (now() - INTERVAL '48 hours') order by accessed desc;
+-- select * from properties where last_accessed_timestamp::timestamp < (now() - INTERVAL '48 hours') order by last_accessed_timestamp asc;
 
--- delete from properties where rm_property_url LIKE '%107534963%';
+-- delete from sale_history where property_id = 'fa0d1f8d-d14c-401e-86c1-44b8283c74b';
+-- delete from properties where id = 'fa0d1f8d-d14c-401e-86c1-44b8283c74b';
+--fa0d1f8d-d14c-401e-86c1-44b8283c74bf
 -- select id, accessed from urls order by accessed desc;
 -- update urls set accessed = '2021-05-25 10:52:26.277063' where id = '32d7efe3-2d50-4e34-942b-f3a7fefb1e81';
 -- select id, accessed from urls order by accessed asc;
 -- select id, accessed from urls order by accessed asc;
 -- select * from urls where id = '32d7efe3-2d50-4e34-942b-f3a7fefb1e81';
-select
-rm_postcode,
-rm_real_address,
-rm_display_status,
-rm_listing_price,
-rm_first_visible_date,
-rm_sold_stc_timestamp,
-created
-from properties where rm_real_address IS NOT NULL ORDER BY created desc;
+-- select
+-- rm_postcode,
+-- rm_real_address,
+-- rm_display_status,
+-- rm_listing_price,
+-- rm_first_visible_date,
+-- rm_sold_stc_timestamp,
+-- created,
+-- last_accessed_timestamp
+-- from properties where rm_real_address IS NOT NULL ORDER BY created desc;
 
 -- delete from properties WHERE rm_commercial = 'true';
 -- select * from urls;rm_commercial

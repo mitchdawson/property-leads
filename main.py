@@ -127,14 +127,14 @@ def main():
     # # RightMovePropertySearch
     # rmps.start()
 
-    # # RightMoveIndividualProperty Search
-    # rmip.start()
+    # # RightMoveIndividualProperty
+    rmip.start()
 
     # # RightMovePropertySaleHistory
     # rmpsh.start()
 
     # RightMoveAreaSaleHistory
-    rmash.start()
+    # rmash.start()
 
     # Epc
     # epc.start()
@@ -152,9 +152,9 @@ def main():
         running.set()
         # Join the Threads (wait for them to complete)
         # rmps.join()
-        # rmip.join()
+        rmip.join()
         # rmpsh.join()
-        rmash.join()
+        # rmash.join()
         # epc.join()        
     
     # Catch the Psycopg2 Operational Error and recreate the datebase connection.

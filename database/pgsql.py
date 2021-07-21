@@ -14,9 +14,6 @@ class Database:
         self.db_host = db_host
         self.db_port = db_port
 
-        # Create the database connection.
-        # conn = self.create_db_connection()
-
         # Create a threaded connection pool.
         self.pool = self.create_threaded_connection_pool()
 
@@ -31,16 +28,43 @@ class Database:
             database=self.db_name,
             cursor_factory=psycopg2.extras.DictCursor
         )
-    
-    # def create_db_connection(self):
-    #     return psycopg2.connect(
-    #         dbname=self.db_name,
-    #         user=self.db_user,
-    #         password=self.db_password,
-    #         host=self.db_host,
-    #         port=self.db_port,
-    #         cursor_factory=psycopg2.extras.DictCursor
-    #     )
+    def get_properties_with_real_or_epc_address(self):
+        """
+        This query returns propeties that have a real address or epc obtained address.
+        """
+        with self.pool.getconn() as conn:
+            try:
+                cur = conn.cursor()
+                cur.execute(
+                    """
+                    SELECT
+                    id, rm_real_address, rm_epc_cert_address
+                    FROM properties
+                    WHERE rm_real_address IS NOT NULL
+                    OR rm_epc_cert_address IS NOT NULL
+                    AND id NOT IN (
+                    SELECT property_id
+                    FROM address
+                    )
+                    ORDER BY created ASC 
+                    LIMIT 100;
+                    """
+                )
+                results = cur.fetchall()
+            except Exception as e:
+                logger.exception(str(e))
+                # Close the cursor object
+                cur.close()
+                # Put the connection back into the pool.
+                self.pool.putconn(conn)
+                return
+            else:
+                logger.info(f"returning {len(results)} property id and display status objects")
+                # Close the cursor object
+                cur.close()
+                # Put the connection back into the pool.
+                self.pool.putconn(conn)
+                return [dict(r) for r in results]
 
     def get_properties_with_epc_url_and_no_real_address(self):
         """
@@ -190,6 +214,39 @@ class Database:
                 self.pool.putconn(conn)
                 return [dict(r) for r in results]
     
+    def get_properties_not_accessed_within_alloted_time(self):
+        """
+        Extract properties that we have not accessed within the set period of time.
+        """
+        with self.pool.getconn() as conn:
+            try:
+                cur = conn.cursor()
+                cur.execute(
+                """
+                SELECT
+                id, rm_property_url, 
+                rm_postcode, rm_sold_nearby_url, rm_sold_stc
+                FROM properties
+                WHERE last_accessed_timestamp::timestamp < (now() - INTERVAL '48 hours')
+                ORDER BY last_accessed_timestamp ASC LIMIT 1000;
+                """
+                )
+                results = cur.fetchall()
+            except Exception as e:
+                logger.exception(str(e))
+                # Close the cursor object
+                cur.close()
+                # Put the connection back into the pool.
+                self.pool.putconn(conn)
+                return
+            else:
+                logger.info(f"returning {len(results)} properties not accessed within 48 hours")
+                # Close the cursor object
+                cur.close()
+                # Put the connection back into the pool.
+                self.pool.putconn(conn)
+                return [dict(r) for r in results]
+    
     def get_properties_with_no_sale_history(self):
         """
         Get properties with no sale history.
@@ -289,13 +346,19 @@ class Database:
                 self.pool.putconn(conn)
                 return
             else:
-                logger.info(f"retrived '{cur.rowcount}' sale histories for propert id '{property_id}'")
+                logger.info(f"retrived '{cur.rowcount}' sale histories for property id '{property_id}'")
                 # Close the cursor object
                 cur.close()
                 # Put the connection back into the pool.
                 self.pool.putconn(conn)
                 # Return the results.
                 return [dict(r) for r in results]
+    
+    def delete_sale_history_and_property(self, property_id):
+        # Delete the property sale history first.
+        self.delete_sale_history_for_property_id(property_id)
+        # Delete the property from the database.
+        self.delete_property_for_property_id(property_id)
     
     def delete_property_for_property_id(self, property_id):
         with self.pool.getconn() as conn:
@@ -305,6 +368,35 @@ class Database:
                 sql = """
                 DELETE FROM properties
                 WHERE id = uuid(%s);
+                """
+                # Use the psycopg2 execute_values function.
+                cur.execute(sql, property_id)
+            except Exception as e:
+                logger.exception(str(e))
+                conn.rollback()
+                # Close the cursor object
+                cur.close()
+                # Put the connection back into the pool.
+                self.pool.putconn(conn)
+                # Return the results.
+                return
+            else:
+                conn.commit()
+                logger.info(f"Deleted property with id '{property_id}'")
+                # Close the cursor object
+                cur.close()
+                # Put the connection back into the pool.
+                self.pool.putconn(conn)
+                return
+    
+    def delete_sale_history_for_property_id(self, property_id):
+        with self.pool.getconn() as conn:
+            try:
+                cur = conn.cursor()
+                # Build the SQL Statement.
+                sql = """
+                DELETE FROM sale_history
+                WHERE property_id = uuid(%s);
                 """
                 # Use the psycopg2 execute_values function.
                 cur.execute(sql, property_id)
@@ -749,4 +841,71 @@ class Database:
                 # Put the connection back into the pool.
                 self.pool.putconn(conn)
                 logger.info(f"properties real address updated = {count}")
+                return count
+    
+    def update_property_sold_stc_status(self, properties_stc_status):
+        """
+        Update the given property entry sold stc status.
+        """
+        with self.pool.getconn() as conn:
+            try:
+                cur = conn.cursor()
+                sql = """
+                UPDATE properties p
+                SET rm_sold_stc = data.rm_sold_stc,
+                rm_sold_stc_timestamp = CURRENT_TIMESTAMP
+                FROM (VALUES %s) AS data (id, rm_sold_stc)
+                WHERE p.id = uuid(data.id);
+                """
+                # Use the psycopg2 execute_values function.
+                execute_values(cur, sql, properties_stc_status)
+            except (Exception, psycopg2.Error) as e:
+                logger.exception(str(e))
+                conn.rollback()
+                # Close the cursor object
+                cur.close()
+                # Put the connection back into the pool.
+                self.pool.putconn(conn)
+                return
+            else:
+                conn.commit()
+                count = cur.rowcount
+                # Close the cursor object
+                cur.close()
+                # Put the connection back into the pool.
+                self.pool.putconn(conn)
+                logger.info(f"properties sold stc status updated = {count}")
+                return count
+    
+    def update_property_last_accessed(self, last_accessed_property_ids):
+        """
+        Update the given property entry sold stc status.
+        """
+        with self.pool.getconn() as conn:
+            try:
+                cur = conn.cursor()
+                sql = """
+                UPDATE properties p
+                SET last_accessed_timestamp = CURRENT_TIMESTAMP
+                FROM (VALUES %s) AS data (id)
+                WHERE p.id = uuid(data.id);
+                """
+                # Use the psycopg2 execute_values function.
+                execute_values(cur, sql, last_accessed_property_ids)
+            except (Exception, psycopg2.Error) as e:
+                logger.exception(str(e))
+                conn.rollback()
+                # Close the cursor object
+                cur.close()
+                # Put the connection back into the pool.
+                self.pool.putconn(conn)
+                return
+            else:
+                conn.commit()
+                count = cur.rowcount
+                # Close the cursor object
+                cur.close()
+                # Put the connection back into the pool.
+                self.pool.putconn(conn)
+                logger.info(f"properties last_accessed_timestamp updated = {count}")
                 return count
