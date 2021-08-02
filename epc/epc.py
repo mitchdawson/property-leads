@@ -186,7 +186,7 @@ class EPC(Thread):
     
     def cleanup_files_directory(self):
         # Create the file path
-        dir_path = os.path.abspath(os.path.join(os.sep, os.getcwd(), 'epc', 'files'))
+        dir_path = os.path.abspath(os.path.join(os.sep, os.getcwd(), 'epc', 'pdfs'))
         # logger.info(f"{dir_path}")
         # Create a list of files in the directory path.
         files = os.listdir(dir_path)
