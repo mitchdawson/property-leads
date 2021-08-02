@@ -1,0 +1,56 @@
+import requests
+from bs4 import BeautifulSoup 
+
+base_url = "https://www.rightmove.co.uk"
+
+results_url = "/property-for-sale/find.html?locationIdentifier=REGION%5E307&radius=3.0&propertyTypes=detached%2Csemi-detached%2Cterraced&primaryDisplayPropertyType=houses&includeSSTC=true&mustHave=&dontShow=&furnishTypes=&keywords="
+
+html = requests.get(base_url + results_url)
+
+soup = BeautifulSoup(html.content, 'html.parser')
+
+# my_divs = soup.find("div", {"class": "propertySearch-results"})
+
+# my_divs = soup.find(id="propertySearch-results-container")
+
+# List of Individual Properties
+props = soup.find(id="l-searchResults")
+print(len(props))
+
+# Iterate through the properties
+# for p in props:
+#     price = p.find("div", {"class": "propertyCard-priceValue"})
+#     print(price.text)
+
+
+# num_results = (int(str(soup.find("span", {"class": "searchHeader-resultCount"}).text).replace(",", "")))
+# print(num_results)
+
+# props = soup.find_all("div", {"class": "l-searchResult is-list"})
+
+# Get ALL property links from the main page, if we need to load each property individually.
+# links = [link.get("href") for link in soup.find_all("a") if str(link.get("href")).startswith("/properties/")]
+# print(links)
+
+
+
+# for p in props:
+#     u = p.find("a", href=True)
+#     print(u)
+
+
+# hrefs = soup.find_all("a", href=True)
+# print(hrefs)
+
+# for p in properties:
+#     # price = p.find("div", {"Class": "propertyCard-price"})
+#     # print(price)
+#     print(p)
+#     break
+
+
+
+# properties = my_divs.find_all()
+# print(my_divs.prettify())
+
+# print(len(properties))
