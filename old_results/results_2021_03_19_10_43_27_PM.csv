@@ -1,0 +1,9 @@
+id,description,property_type,bedrooms,bathrooms,commercial,display_address,display_status,latitude,longitude,price,first_visible_date,url,postcode,deliveryPointId,epcGraphs
+91949060,4 bedroom detached house for sale,Detached,4,,False,"Lower Stock Road, West Hanningfield",Sold STC,51.66981,0.47418,1750000,2020-05-05T14:46:47Z,/properties/91949060,CM2 8UY,31445017,
+99093437,5 bedroom detached house for sale,Detached,5,,False,"Pennys Lane, Margaretting",Sold STC,51.69073,0.4126,1499995,2020-10-28T13:43:44Z,/properties/99093437,CM4 0HA,33296167,
+72379485,5 bedroom detached house for sale,Detached,5,0,False,"Little Baddow, Chelmsford",Sold STC,51.72879,0.55473,1450000,2020-08-06T12:17:41Z,/properties/72379485,CM3 4AY,32911426,
+101912762,6 bedroom detached house for sale,Detached,6,2,False,"Newney Green, Chelmsford, Essex, CM1",Sold STC,51.735354,0.392052,1350000,2021-01-12T17:53:25Z,/properties/101912762,CM1 3SE,36967978,
+77720016,6 bedroom detached house for sale,Detached,6,5,False,"Shardelow Avenue, Springfield, Chelmsford, Essex, CM1",Sold STC,51.757979,0.504572,1350000,2021-02-08T16:03:33Z,/properties/77720016,CM1 6BG,37254196,
+101943176,4 bedroom detached house for sale,Detached,4,1,False,"Wheelers Hill, Little Waltham, Chelmsford, Essex, CM3",Sold STC,51.784791,0.485274,1275000,2021-01-13T14:38:24Z,/properties/101943176,CM3 3LY,22874506,
+93474227,4 bedroom detached house for sale,Detached,4,,False,"The Common, Galleywood Common",Sold STC,51.69599,0.46533,1250000,2020-06-13T14:50:13Z,/properties/93474227,CM2 8JX,36497911,https://media.rightmove.co.uk/15k/14258/93474227/14258_TheRidings_EPC_00_0000.pdf
+67744308,5 bedroom detached house for sale,Detached,5,4,False,"Riceen, Woodhall Hill, Chignal Smealey, Chelmsford",Sold STC,51.77218,0.43411,1250000,2020-01-20T09:05:02Z,/properties/67744308,CM1 4SY,,

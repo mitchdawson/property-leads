@@ -1,0 +1,37 @@
+{
+    "rm_epc_postcode_url": "https://find-energy-certificate.digital.communities.gov.uk/find-a-certificate/search-by-postcode?postcode={}",
+    "epc_validty" : 10,
+    "web_client": {
+        "rm_base_url" : "https://rightmove.co.uk",
+        "request_headers" : {
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:77.0) Gecko/20100101 Firefox/77.0",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.5",
+            "DNT": "1",
+            "Connection": "keep-alive",
+            "Upgrade-Insecure-Requests": "1"
+        }
+    },
+    "property_search" : {
+        "rm_maximum_results" : 950,
+        "rm_sleep_time" : 60
+    },
+    "selenium": {
+        "rm_sales_history_cookies_rpath" : "//*[@class='optanon-allow-all accept-cookies-button']",
+        "rm_sales_history_element_rpath" : "//*[@class='_1-GJOH09_oTTmLw-B-feOC']",
+        "rm_sales_history_table_rpath": "//div[@class='_1SNP1o4T-Q9HHmHymdO1Gn']/table/tbody/tr"
+    },
+    "database": {
+        "db_name": "leads",
+        "db_user": "leadsapp",
+        "db_password": "P1nk@ppl3",
+        "db_host": "192.168.1.230",
+        "db_port": 5432
+    },
+    "gov" : {
+        "api_key": "5d1d37c0-03ee-4007-b75f-b29bc1331f95"
+    },
+    "epc": {
+        "epc_base_url": "https://find-energy-certificate.digital.communities.gov.uk/energy-certificate/"
+    }
+}
