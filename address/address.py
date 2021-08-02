@@ -159,12 +159,52 @@ class AddressValidator:
         return self.make_request_convert_response_json(url)
     
 
+    
+
+    def process_properties(self, properties):
+        """
+        This method takes a list of properties that already have an address based on the sale history
+        or from the energy performance certificates. The aim of this is to get a standardise 
+        formatted address that can then be used for sending out leaflets.
+        """
+        
+        # Check that we have a valid list of properties, if None then return.
+        if not properties:
+            return
+        
+        # Create a placeholder for address objects
+        property_address_objects = list()
+
+        # Iterate through the properties
+        for index in range(len(properties)):
+
+            # Try & Accept Loop
+            try:
+
+                # Get a property object
+                property = properties[index]
+
+                
+
+
+            
+
+            except Exception as e:
+                logger.exception(str(e))
+
+
+        
+
+    
+
     def run(self):
         # Forever Loop
         while not self.running.is_set():
             try:
                 # Get properties with a real address or epc address
-                pass
+                properties = self.db.get_properties_with_real_or_epc_address()
+
+                # Process the properties
 
 
             except Exception as e:
