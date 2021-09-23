@@ -68,7 +68,7 @@ class RightMovePropertySearch(Thread):
         # Break out the json data from the page and load into a python OrderedDict.
         try:
 
-            js = json.loads(page.split("</div><script>window.jsonModel = ")[1].split("</script><script>")[0])
+            js = json.loads(page.split("<script>window.jsonModel = ")[1].split("</script><script>")[0])
             # Get the result Count Value
             result_count = int(str(js["resultCount"]).replace(",", "").strip())
             # print(result_count)
@@ -169,7 +169,7 @@ class RightMovePropertySearch(Thread):
         """
         # Break out the json data from the page and load into a python OrderedDict.
         try:
-            js = json.loads(page.split("</div><script>window.jsonModel = ")[1].split("</script><script>")[0])
+            js = json.loads(page.split("<script>window.jsonModel = ")[1].split("</script><script>")[0])
             # Return the "properties" element from the json.
             properties = js["properties"]
             logger.info(f"properties extracted = {len(properties)}")
